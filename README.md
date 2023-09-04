@@ -1,2 +1,3 @@
-# mp1_2023_osz
-Magasszintű programozási nyelvek I. őszi kurzusok
+# Magasszintű programozási nyelvek I. őszi kurzusok
+
+A repository tartalmazza a az órán elkészített anyagokat.
