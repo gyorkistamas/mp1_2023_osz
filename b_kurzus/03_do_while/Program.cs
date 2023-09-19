@@ -24,7 +24,7 @@ namespace _03_do_while
             do
             {
                 Console.Write("Adjon meg egy egész számot: ");
-            } while (!int.TryParse(Console.ReadLine(), out szam) || (szam < 10 || szam > 20));
+            } while (!int.TryParse(Console.ReadLine(), out szam) || szam < 10 || szam > 20);
 
             Console.ReadLine();
         }
