@@ -90,7 +90,7 @@ namespace zh_gyak
                 int osszeg = 0;
                 for (int j = 0; j < napiTermeles; j++)
                 {
-                    osszeg += fakMagassa[j + i * napiTermeles] / 100 * 500;
+                    osszeg += fakMagassa[j + i * napiTermeles] / 10 * 500;
                 }
                 Console.WriteLine($"{i + 1}. napon {osszeg} Ft bevételre számíthatunk");
                 if (osszeg > max)

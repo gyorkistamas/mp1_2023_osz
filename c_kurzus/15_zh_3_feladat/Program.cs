@@ -11,10 +11,11 @@ namespace _15_zh_3_feladat
         static void Main(string[] args)
         {
             Console.Write("Adja meg hány versenyző indult: ");
-            int versenyzokSzama = int.Parse(Console.ReadLine());
-            if (versenyzokSzama < 3)
+            int versenyzokSzama = 0;
+
+            if (!int.TryParse(Console.ReadLine(), out versenyzokSzama) || versenyzokSzama < 3)
             {
-                Console.WriteLine("Legalább 3 versenyzőnek lennie kell");
+                Console.WriteLine("Legalább 3 versenyzőnek kell lennie!");
                 Console.ReadLine();
                 Environment.Exit(0);
             }
