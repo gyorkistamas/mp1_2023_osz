@@ -49,6 +49,25 @@ namespace _17_ZH_GYAK
             }
         }
 
+        static List<string> KategoriaBeolvasas()
+        {
+            List<String> kategoriak = new List<string>();
+
+            string beirtKategoria = "";
+
+            while (beirtKategoria != "vége")
+            {
+                Console.Write("Adja meg a kategóriát, vagy a vége szóval lépjen ki: ");
+                beirtKategoria = Console.ReadLine();
+                if (beirtKategoria != "vége")
+                {
+                    kategoriak.Add(beirtKategoria);
+                }
+            }
+
+            return kategoriak;
+        }
+
 
         static void Main(string[] args)
         {
@@ -127,6 +146,105 @@ namespace _17_ZH_GYAK
             {
                 Console.WriteLine("Nincs ilyen film a listában!");
             }
+
+
+            //9. feladat
+            Console.Write("Adja meg a legfiatalabb személy életkorát: ");
+            int eletkor = int.Parse(Console.ReadLine());
+
+            List<string> kedveltKategoriak = KategoriaBeolvasas();
+
+            Console.Write("Lehet felíratos a film? ");
+            string valasz = Console.ReadLine();
+            bool feliratos = false;
+            
+            if (valasz == "igen" || valasz == "Igen" || valasz == "yes")
+            {
+                feliratos = true;
+            }
+
+            for (int i = 0; i < filmek.Count;i++)
+            {
+                // Megnézzük, hogy a korhatár megfelelő-e
+                if (filmek[i].korhatar >= eletkor)
+                {
+                    // Megnézzük, hogy megfelelő-e a kategória
+                    bool benneVanAkategoria = false;
+                    for (int j = 0; j < kedveltKategoriak.Count; j++)
+                    {
+                        if (filmek[i].kategoriak.Contains(kedveltKategoriak[j]))
+                        {
+                            benneVanAkategoria = true;
+                            break;
+                        }
+                    }
+
+                    if (benneVanAkategoria)
+                    {
+                        // Megnézzük, hogy felíratos-e vagy sem. Ha lehet felíratos, akkor kiíratjuk
+                        // ha nem, akkor csak akkor, ha nem felíratos a film
+                        if (feliratos)
+                        {
+                            Console.WriteLine($"{filmek[i].cim}");
+                        }
+                        else if (!filmek[i].feliratos)
+                        {
+                            Console.WriteLine($"{filmek[i].cim}");
+                        }
+                    }
+                }
+            }
+
+            // 10. feladat
+
+            List<string> kategoriak = new List<string>();
+
+            for (int i = 0; i < filmek.Count; i++)
+            {
+                for (int j = 0; j < filmek[i].kategoriak.Count; j++)
+                {
+                    if (!kategoriak.Contains(filmek[i].kategoriak[j]))
+                    {
+                        kategoriak.Add(filmek[i].kategoriak[j]);
+                    }
+                }
+            }
+
+
+
+            // For változattal
+            for (int i = 0; i < kategoriak.Count; i++)
+            {
+                Film max = new Film();
+                for (int j = 0; j < filmek.Count; j++)
+                {
+                    if (filmek[j].kategoriak.Contains(kategoriak[i]) &&
+                        filmek[j].premier <= DateTime.Now &&
+                        filmek[j].ertekeles > max.ertekeles)
+                    {
+                        max = filmek[j];
+                    }
+                }
+                Console.WriteLine($"A {kategoriak[i]} kategóriába a legjobbra értékelt film a: {max.cim}");
+            }
+
+
+            //Foreach
+            foreach(string kategoria in kategoriak)
+            {
+                Film max = new Film();
+                foreach (Film film in filmek)
+                {
+                    if (film.kategoriak.Contains(kategoria) &&
+                        film.premier <= DateTime.Now &&
+                        film.ertekeles > max.ertekeles)
+                    {
+                        max = film;
+                    }
+                }
+                Console.WriteLine($"A {kategoria} kategóriába a legjobbra értékelt film a: {max.cim}");
+            }
+
 
             Console.ReadLine();
         }
