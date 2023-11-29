@@ -51,6 +51,31 @@ namespace _19_zh2_gyak
             }
         }
 
+        static List<string> F8_Kedvenckategoriak()
+        {
+            List<string> kategoriak = new List<string>();
+
+            Console.WriteLine("Adja meg a kedvenc kategóriáit, vége szóval léphet ki");
+
+            while(true)
+            {
+                Console.Write("> ");
+                string kategoria = Console.ReadLine();
+
+                if (kategoria == "vége")
+                {
+                    break;
+                }
+
+                if (!kategoriak.Contains(kategoria))
+                {
+                    kategoriak.Add(kategoria);
+                }
+            }
+
+            return kategoriak;
+        }
+
         static void Main(string[] args)
         {
             List<Film> filmek = new List<Film>();
@@ -190,11 +215,81 @@ namespace _19_zh2_gyak
 
             //9. feladat: életkor bekér, meghívjátok a 8. feladat függvényét,
             //bekéritek, hogy lehet-e felíratos, ciklussal végigmentek a listán, if-el megnézitek, hogy mely filmek felelnek meg a kritériumoknak
+            Console.Write("Adja meg a legfiatalabb néző életkorát: ");
+            int eletkor = int.Parse(Console.ReadLine());
+
+            List<string> kedvencKategoriak = F8_Kedvenckategoriak();
+
+            bool feliratos = false;
+            Console.Write("Lehet feliratos a film? ");
+            string valasz = Console.ReadLine();
+            if (valasz == "igen")
+            {
+                feliratos = true;
+            }
+
+            for(int i = 0; i < filmek.Count; i++)
+            {
+                if (filmek[i].korhatar <= eletkor)
+                {
+                    bool megfeleloKategoriajuE = false;
+                    for (int j = 0; j < kedvencKategoriak.Count; j++)
+                    {
+                        if (filmek[i].kategoriak.Contains(kedvencKategoriak[j]))
+                        {
+                            megfeleloKategoriajuE = true;
+                            break;
+                        }
+                    }
+
+                    if (megfeleloKategoriajuE)
+                    {
+                        if (feliratos)
+                        {
+                            Console.WriteLine($"{filmek[i].cim}");
+                        }
+                        else if (!filmek[i].feliratos)
+                        {
+                            Console.WriteLine($"{filmek[i].cim}");
+                        }
+                    }
+                }
+            }
+
 
             // 10. Csináltok egy listát, amibe kigyüjtitek a kategóriákat (végigmentek a filmek listán és ha olyan kategóriát találtok, ami még nincs benne a listában, akkor azt hozzáadjátok (lista.Contains()))
             // Végig mentek ezen ciklussol, azon belül egy másik ciklussal kiválasztjátok a kategóriához tartozó legmagasabb értékelésű filmet
 
             // Másik lehetőség: dictionary
+
+            List<string> osszesKategoria = new List<string>();
+
+            for (int i = 0; i < filmek.Count; i++)
+            {
+                for (int j = 0; j < filmek[i].kategoriak.Count; j++)
+                {
+                    if (!osszesKategoria.Contains(filmek[i].kategoriak[j]))
+                    {
+                        osszesKategoria.Add(filmek[i].kategoriak[j]);
+                    }
+                }
+            }
+
+            foreach(string kategoria in osszesKategoria)
+            {
+                Film max = new Film();
+                foreach(Film film in filmek)
+                {
+                    if (film.kategoriak.Contains(kategoria) &&
+                        film.premier < DateTime.Now &&
+                        film.ertekeles > max.ertekeles)
+                    {
+                        max = film;
+                    }
+                }
+
+                Console.WriteLine($"A {kategoria} kategóriában a legnagyobb értékelésű film a {max.cim} ({max.ertekeles})");
+            }
 
             Console.ReadLine();
         }
