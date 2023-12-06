@@ -180,6 +180,28 @@ namespace _21_zh2_gyak_2
                 csokik.RemoveAt(torlendo);
                 Console.WriteLine("Sikeresen töröltük a csokit!");
             }
+            List<string> gyartok = new List<string>();
+            for (int i = 0; i < csokik.Count; i++)
+            {
+                if (!gyartok.Contains(csokik[i].marka) )
+                {
+                    gyartok.Add(csokik[i].marka);
+                }
+            }
+            for (int i = 0; i < gyartok.Count; i++)
+            {
+                Csoki maxErtek = new Csoki();
+                for (int j = 0; j < csokik.Count; j++)
+                {
+                    if (csokik[j].ar > maxErtek.ar && csokik[j].marka == gyartok[i])
+                    {
+                        maxErtek = csokik[j];
+                    }
+
+                }
+                Console.WriteLine($"A {maxErtek.marka} nak a {maxErtek.izesites} ízesítésű csokija a legdrágább.");
+                Console.WriteLine($"Ha mindet eladnánk, akkor {maxErtek.ar * maxErtek.mennyiseg} forintot kapnánk.");
+            }
 
             Console.ReadLine();
         }
