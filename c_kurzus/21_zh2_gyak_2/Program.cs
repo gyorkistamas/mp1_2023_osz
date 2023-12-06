@@ -88,7 +88,7 @@ namespace _21_zh2_gyak_2
                 Csoki csoki = new Csoki();
                 csoki.azonosito = sor[0];
                 csoki.marka = sor[1];
-                //csoki.tejcsokolade = sor[2] == "tej";
+                // csoki.tejcsokolade = sor[2] == "tej";
                 if (sor[2] == "tej")
                 {
                     csoki.tejcsokolade = true;
@@ -150,7 +150,36 @@ namespace _21_zh2_gyak_2
             }
 
             // 7. feladat: használjuk a 5-6. feladatban megírt függvényt
-            //Console.Write($"{F6_AkciosAr(csoki)}");
+            Console.WriteLine("7. feladat");
+            List<Csoki> kigyujtottCsokik = new List<Csoki>();
+            F5_PremiumCsokik(csokik, kigyujtottCsokik, 650);
+            foreach (Csoki csoki in csokik)
+            {
+                if(csoki.szavatossag > DateTime.Now)
+                {
+                    Console.WriteLine($"{csoki.azonosito}: {csoki.marka} ({csoki.izesites}) Ár: {csoki.ar} Ft, Akciós ár: {F6_AkciosAr(csoki)} Ft");
+                }
+            }
+
+            int torlendo = -1;
+            for (int i = 0; i < csokik.Count; i++)
+            {
+                if (csokik[i].azonosito == "NBKL5NQ")
+                {
+                    torlendo = i;
+                    break;
+                }
+            }
+
+            if (torlendo == -1)
+            {
+                Console.WriteLine("Nincs ilyen azonosítójú csoki!");
+            }
+            else
+            {
+                csokik.RemoveAt(torlendo);
+                Console.WriteLine("Sikeresen töröltük a csokit!");
+            }
 
             Console.ReadLine();
         }
